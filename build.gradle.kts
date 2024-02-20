@@ -29,7 +29,7 @@ dependencies {
     minecraft("com.mojang:minecraft:1.20.1")
     mappings("net.fabricmc:yarn:1.20.1+build.2")
 
-    include(modImplementation("gg.norisk:hero-api:1.0.28-SNAPSHOT")!!)
+    include(modImplementation("gg.norisk:hero-api:1.0.32-SNAPSHOT")!!)
     modImplementation("de.hglabor:notify:1.2.2")
 
     modImplementation("net.fabricmc:fabric-loader:0.14.21")
