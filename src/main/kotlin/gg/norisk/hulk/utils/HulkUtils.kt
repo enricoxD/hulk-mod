@@ -1,7 +1,7 @@
-package gg.norisk.hulk.common.utils
+package gg.norisk.hulk.utils
 
-import gg.norisk.hulk.common.entity.isHulk
-import gg.norisk.hulk.common.registry.SoundRegistry
+import gg.norisk.hulk.player.isHulk
+import gg.norisk.hulk.registry.SoundRegistry
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.AbstractClientPlayerEntity
 import net.minecraft.client.sound.PositionedSoundInstance
@@ -11,7 +11,6 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.math.BlockPos
 import net.silkmc.silk.core.entity.directionVector
 import net.silkmc.silk.core.entity.modifyVelocity
-import net.silkmc.silk.core.math.geometry.Sphere
 import net.silkmc.silk.core.task.mcCoroutineTask
 
 

@@ -1,8 +1,7 @@
 package gg.norisk.hulk.mixin;
 
-import gg.norisk.hulk.client.abilities.HulkTransformation;
-import gg.norisk.hulk.common.ManagerCommon;
-import gg.norisk.hulk.common.entity.HulkPlayerKt;
+import gg.norisk.hulk.HulkManagerKt;
+import gg.norisk.hulk.player.HulkPlayerKt;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -16,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
     @Unique
-    private static final Identifier FULL = ManagerCommon.INSTANCE.toId("textures/green_heart_full.png");
+    private static final Identifier FULL = HulkManagerKt.toId("textures/green_heart_full.png");
     @Unique
-    private static final Identifier HALF = ManagerCommon.INSTANCE.toId("textures/green_heart_half.png");
+    private static final Identifier HALF = HulkManagerKt.toId("textures/green_heart_half.png");
 
     @Inject(method = "drawHeart", at = @At("HEAD"), cancellable = true)
     private void drawHeartInjection(DrawContext drawContext, InGameHud.HeartType heartType, int i, int j, int k, boolean bl, boolean bl2, CallbackInfo ci) {
@@ -26,7 +25,6 @@ public abstract class InGameHudMixin {
         if (heartType == InGameHud.HeartType.CONTAINER) return;
         if (player == null) return;
         if (HulkPlayerKt.isHulk(player)) {
-            if (!HulkTransformation.INSTANCE.getUseHulkSkin()) return;
             if (bl) {
                 ci.cancel();
                 return;

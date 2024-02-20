@@ -1,4 +1,4 @@
-package gg.norisk.hulk.common.entity
+package gg.norisk.hulk.entity
 
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.mob.PathAwareEntity

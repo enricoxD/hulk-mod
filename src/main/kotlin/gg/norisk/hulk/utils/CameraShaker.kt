@@ -1,4 +1,4 @@
-package gg.norisk.hulk.common.utils
+package gg.norisk.hulk.utils
 
 import com.google.common.util.concurrent.AtomicDouble
 import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap

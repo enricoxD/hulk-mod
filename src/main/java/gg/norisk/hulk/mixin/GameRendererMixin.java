@@ -1,8 +1,8 @@
 package gg.norisk.hulk.mixin;
 
-import gg.norisk.hulk.common.entity.HulkPlayerKt;
-import gg.norisk.hulk.common.entity.IHulkPlayer;
-import gg.norisk.hulk.common.utils.CameraShaker;
+import gg.norisk.hulk.player.HulkPlayerKt;
+import gg.norisk.hulk.player.IHulkPlayer;
+import gg.norisk.hulk.utils.CameraShaker;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;

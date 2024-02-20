@@ -1,6 +1,6 @@
-package gg.norisk.hulk.common.registry
+package gg.norisk.hulk.registry
 
-import gg.norisk.hulk.common.ManagerCommon.toId
+import gg.norisk.hulk.toId
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.SoundEvent

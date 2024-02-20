@@ -1,6 +1,6 @@
 package gg.norisk.hulk.mixin;
 
-import gg.norisk.hulk.common.utils.CameraShaker;
+import gg.norisk.hulk.utils.CameraShaker;
 import net.minecraft.client.render.Camera;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.BlockView;

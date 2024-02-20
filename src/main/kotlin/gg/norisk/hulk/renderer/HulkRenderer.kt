@@ -1,7 +1,6 @@
-package gg.norisk.hulk.client.renderer.entity
+package gg.norisk.hulk.renderer
 
-import gg.norisk.hulk.client.model.entity.HulkModel
-import gg.norisk.hulk.common.entity.HulkEntity
+import gg.norisk.hulk.entity.HulkEntity
 import net.minecraft.client.render.entity.EntityRendererFactory
 import software.bernie.geckolib.renderer.GeoEntityRenderer
 

@@ -1,6 +1,6 @@
 package gg.norisk.hulk.mixin;
 
-import gg.norisk.hulk.common.entity.HulkPlayerKt;
+import gg.norisk.hulk.player.HulkPlayerKt;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.AnimalModel;
 import net.minecraft.client.render.entity.model.BipedEntityModel;

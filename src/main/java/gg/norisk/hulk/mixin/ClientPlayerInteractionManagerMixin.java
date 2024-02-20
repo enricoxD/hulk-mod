@@ -1,8 +1,9 @@
 package gg.norisk.hulk.mixin;
 
-import gg.norisk.hulk.client.abilities.Punch;
-import gg.norisk.hulk.common.entity.HulkPlayerKt;
-import gg.norisk.hulk.common.entity.IHulkPlayer;
+import gg.norisk.hulk.player.HulkPlayerKt;
+import gg.norisk.hulk.player.IHulkPlayer;
+import gg.norisk.hulk.events.AttackBlockEvent;
+import me.obsilabor.alert.EventManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +28,9 @@ public abstract class ClientPlayerInteractionManagerMixin {
     @Inject(method = "attackBlock", at = @At("HEAD"))
     private void doAttackInjection(BlockPos blockPos, Direction direction, CallbackInfoReturnable<Boolean> cir) {
         if (MinecraftClient.getInstance().player == null) return;
-        Punch.INSTANCE.onAttack(blockPos);
+        var player = MinecraftClient.getInstance().player;
+        var event = new AttackBlockEvent(player, blockPos, direction);
+        EventManager.callEvent(event);
     }
 
     //Für Blöcke -> Blöcke anvisieren hat höhere / andere Range

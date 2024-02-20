@@ -13,19 +13,13 @@
     "sources": "https://github.com/copyandexecute/hulk-mod"
   },
   "license": "GPLv3+",
-  "icon": "assets/hulk/icon.png",
+  "icon": "assets/heroes/hulk/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
       {
         "adapter": "kotlin",
-        "value": "gg.norisk.hulk.common.ManagerCommon"
-      }
-    ],
-    "client": [
-      {
-        "adapter": "kotlin",
-        "value": "gg.norisk.hulk.client.ManagerClient"
+        "value": "gg.norisk.hulk.HulkManager"
       }
     ]
   },
@@ -39,6 +33,7 @@
     "java": ">=17",
     "fabric-language-kotlin": "*",
     "fabric": "*",
-    "silk-core": "*"
+    "silk-core": "*",
+    "heroescommon": "*"
   }
 }

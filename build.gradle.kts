@@ -14,11 +14,24 @@ repositories {
     mavenCentral()
     maven("https://maven.kosmx.dev/")
     maven("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
+
+    maven {
+        url = uri("https://maven.norisk.gg/repository/maven-snapshots/")
+
+        credentials {
+            username = (System.getenv("NORISK_NEXUS_USERNAME") ?: project.findProperty("noriskMavenUsername") ?: "").toString()
+            password = (System.getenv("NORISK_NEXUS_PASSWORD") ?: project.findProperty("noriskMavenPassword") ?: "").toString()
+        }
+    }
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:1.20.1")
     mappings("net.fabricmc:yarn:1.20.1+build.2")
+
+    include(modImplementation("gg.norisk:hero-api:1.0.28-SNAPSHOT")!!)
+    modImplementation("de.hglabor:notify:1.2.2")
+
     modImplementation("net.fabricmc:fabric-loader:0.14.21")
     modImplementation("net.fabricmc.fabric-api:fabric-api:0.83.1+1.20.1")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.9.5+kotlin.1.8.22")

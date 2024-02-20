@@ -1,4 +1,4 @@
-package gg.norisk.hulk.common.utils
+package gg.norisk.hulk.utils
 
 import kotlinx.serialization.Serializable
 import net.minecraft.util.math.BlockPos

@@ -1,7 +1,7 @@
-package gg.norisk.hulk.client.model.entity
+package gg.norisk.hulk.renderer
 
-import gg.norisk.hulk.common.ManagerCommon.toId
-import gg.norisk.hulk.common.entity.HulkEntity
+import gg.norisk.hulk.entity.HulkEntity
+import gg.norisk.hulk.toId
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.util.Identifier
 import software.bernie.geckolib.model.DefaultedEntityGeoModel

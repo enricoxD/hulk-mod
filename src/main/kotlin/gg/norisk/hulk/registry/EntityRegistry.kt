@@ -1,7 +1,7 @@
-package gg.norisk.hulk.common.registry
+package gg.norisk.hulk.registry
 
-import gg.norisk.hulk.common.ManagerCommon.toId
-import gg.norisk.hulk.common.entity.HulkEntity
+import gg.norisk.hulk.entity.HulkEntity
+import gg.norisk.hulk.toId
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricEntityTypeBuilder
 import net.minecraft.entity.Entity
@@ -15,8 +15,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object EntityRegistry {
-    val HULK =
-        registerMob("hulk", ::HulkEntity, 1.5f, 1.5f)
+    val HULK = registerMob("hulk", ::HulkEntity, 1.5f, 1.5f)
 
     fun init() {
         FabricDefaultAttributeRegistry.register(HULK, createGenericEntityAttributes())

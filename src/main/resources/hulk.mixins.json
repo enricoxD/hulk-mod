@@ -8,17 +8,17 @@
   "mixins": [
     "EntityMixin",
     "LivingEntityMixin",
-    "PlayerEntityMixin",
+    "PlayerEntityMixin"
+  ],
+  "server": [
     "ServerPlayerEntityMixin"
   ],
   "client": [
-    "AbstractClientPlayerEntityMixin",
     "BipedEntityModelMixin",
     "CameraMixin",
     "ClientPlayerInteractionManagerMixin",
     "GameRendererMixin",
     "InGameHudMixin",
-    "KeyboardMixin",
     "PlayerEntityRendererMixin"
   ]
 }
