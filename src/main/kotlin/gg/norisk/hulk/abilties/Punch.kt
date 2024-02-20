@@ -17,7 +17,7 @@ import net.silkmc.silk.core.text.literal
 import kotlin.random.Random
 
 @Serializable
-data class PunchUsePacket(
+data class PunchUseDescription(
     val startX: Int,
     val startY: Int,
     val startZ: Int
@@ -28,15 +28,15 @@ val Punch by Ability("Punch", 10) {
     clientListen<AttackBlockEvent> {
         val player = MinecraftClient.getInstance().player ?: return@clientListen
         val pos = it.blockPos
-        Manager.abilityManager.useAbility(player, ability, PunchUsePacket(pos.x, pos.y, pos.z))
+        Manager.abilityManager.useAbility(player, ability, PunchUseDescription(pos.x, pos.y, pos.z))
     }
 
     handle {
         server { player, description ->
             Silk.server?.broadcastText("received Punch".literal)
 
-            if (description !is PunchUsePacket) return@server
-            Silk.server?.broadcastText("PunchUsePacket".literal)
+            if (description !is PunchUseDescription) return@server
+            Silk.server?.broadcastText("PunchUseDescription".literal)
             val world = player.world
             val pos = BlockPos(description.startX, description.startY, description.startZ)
             world.playSoundAtBlockCenter(
