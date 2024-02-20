@@ -11,27 +11,32 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.sound.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.silkmc.silk.core.Silk
+import net.silkmc.silk.core.text.broadcastText
+import net.silkmc.silk.core.text.literal
 import kotlin.random.Random
 
-/*@Serializable
+@Serializable
 data class PunchUsePacket(
     val startX: Int,
     val startY: Int,
     val startZ: Int
-) : AbilityPacketDescription.Use()*/
+) : AbilityPacketDescription.Use()
 
 val Punch by Ability("Punch", 10) {
 
     clientListen<AttackBlockEvent> {
         val player = MinecraftClient.getInstance().player ?: return@clientListen
         val pos = it.blockPos
-        Manager.abilityManager.useAbility(player, ability, AbilityPacketDescription.Use())
+        Manager.abilityManager.useAbility(player, ability, PunchUsePacket(pos.x, pos.y, pos.z))
     }
 
     handle {
         server { player, description ->
-/*
+            Silk.server?.broadcastText("received Punch".literal)
+
             if (description !is PunchUsePacket) return@server
+            Silk.server?.broadcastText("PunchUsePacket".literal)
             val world = player.world
             val pos = BlockPos(description.startX, description.startY, description.startZ)
             world.playSoundAtBlockCenter(
@@ -64,7 +69,6 @@ val Punch by Ability("Punch", 10) {
 
                 player.world.setBlockBreakingInfo(Random.nextInt(), blockPos, damage)
             }
-*/
         }
     }
 }
