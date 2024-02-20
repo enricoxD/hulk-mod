@@ -2,12 +2,9 @@ package gg.norisk.hulk.utils
 
 import gg.norisk.hulk.player.isHulk
 import gg.norisk.hulk.registry.SoundRegistry
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.network.AbstractClientPlayerEntity
-import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.sound.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.silkmc.silk.core.entity.directionVector
 import net.silkmc.silk.core.entity.modifyVelocity
@@ -16,7 +13,7 @@ import net.silkmc.silk.core.task.mcCoroutineTask
 
 object HulkUtils {
     fun generateSphere(centerBlock: BlockPos, radius: Int, hollow: Boolean): List<BlockPos> {
-        val circleBlocks: MutableList<BlockPos> = ArrayList<BlockPos>()
+        val circleBlocks: MutableList<BlockPos> = ArrayList()
         val bx: Int = centerBlock.x
         val by: Int = centerBlock.y
         val bz: Int = centerBlock.z
@@ -34,22 +31,25 @@ object HulkUtils {
     }
 
     fun smashEntity(player: PlayerEntity, entity: Entity) {
-        if (player is AbstractClientPlayerEntity && player.isHulk) {
-            MinecraftClient.getInstance().soundManager.play(
-                PositionedSoundInstance.master(
-                    SoundRegistry.getRandomGrowlSound(),
-                    1f,
-                    1f
-                )
+        if (player.isHulk) {
+            player.world.playSoundAtBlockCenter(
+                entity.blockPos,
+                SoundRegistry.getRandomGrowlSound(),
+                SoundCategory.PLAYERS,
+                1f,
+                1f,
+                true
             )
-            MinecraftClient.getInstance().soundManager.play(
-                PositionedSoundInstance.master(
-                    SoundRegistry.BOOM,
-                    1f,
-                    5f
-                )
+
+            player.world.playSoundAtBlockCenter(
+                entity.blockPos,
+                SoundRegistry.BOOM,
+                SoundCategory.PLAYERS,
+                1f,
+                5f,
+                true
             )
-        } else if (player is ServerPlayerEntity && player.isHulk) {
+
             entity.modifyVelocity(player.directionVector.normalize().multiply(5.0))
             mcCoroutineTask(howOften = 10, client = false) {
                 for (blockPos in generateSphere(entity.blockPos, 3, false)) {
