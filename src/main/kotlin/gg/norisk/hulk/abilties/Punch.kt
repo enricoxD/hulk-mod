@@ -1,13 +1,13 @@
 package gg.norisk.hulk.abilties
 
+import de.hglabor.notify.events.player.PlayerAttackEntityEvent
 import gg.norisk.heroes.common.Manager
 import gg.norisk.heroes.common.hero.ability.AbilityPacketDescription
 import gg.norisk.heroes.common.hero.ability.implementation.Ability
+import gg.norisk.hulk.events.PlayerStartBlockBreakEvent
 import gg.norisk.hulk.registry.SoundRegistry
 import gg.norisk.hulk.utils.HulkUtils
-import gg.norisk.hulk.events.AttackBlockEvent
-import kotlinx.serialization.Serializable
-import net.minecraft.client.MinecraftClient
+import gg.norisk.hulk.utils.HulkUtils.smashEntity
 import net.minecraft.sound.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -16,29 +16,22 @@ import net.silkmc.silk.core.text.broadcastText
 import net.silkmc.silk.core.text.literal
 import kotlin.random.Random
 
-@Serializable
-data class PunchUseDescription(
-    val startX: Int,
-    val startY: Int,
-    val startZ: Int
-) : AbilityPacketDescription.Use()
-
 val Punch by Ability("Punch", 10) {
 
-    clientListen<AttackBlockEvent> {
-        val player = MinecraftClient.getInstance().player ?: return@clientListen
-        val pos = it.blockPos
-        Manager.abilityManager.useAbility(player, ability, PunchUseDescription(pos.x, pos.y, pos.z))
+    serverListen<PlayerStartBlockBreakEvent>(playerGetter = { it.player }) {
+        println("start block break")
+        Manager.abilityManager.useAbility(it.player, ability, AbilityPacketDescription.Use())
+    }
+
+    serverListen<PlayerAttackEntityEvent>(playerGetter = { it.player }) {
+        smashEntity(it.player, it.target)
     }
 
     handle {
         server { player, description ->
             Silk.server?.broadcastText("received Punch".literal)
-
-            if (description !is PunchUseDescription) return@server
-            Silk.server?.broadcastText("PunchUseDescription".literal)
             val world = player.world
-            val pos = BlockPos(description.startX, description.startY, description.startZ)
+            val pos = BlockPos(3,3,3)
             world.playSoundAtBlockCenter(
                 pos,
                 SoundRegistry.getRandomGrowlSound(),
