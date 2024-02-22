@@ -3,8 +3,9 @@ package gg.norisk.hulk.abilties
 import gg.norisk.heroes.common.events.PlayerInteractAtEntityEvent
 import gg.norisk.heroes.common.events.PlayerSwingHandEvent
 import gg.norisk.heroes.common.hero.ability.implementation.Ability
+import gg.norisk.heroes.common.hero.isHero
+import gg.norisk.hulk.Hulk
 import gg.norisk.hulk.registry.SoundRegistry
-import gg.norisk.hulk.player.isHulk
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
@@ -15,7 +16,7 @@ val ThrowPlayers by Ability("Throw Players", 0) {
     showInKeybindHud = false
 
     fun ServerPlayerEntity.throwPassengers() {
-        if (isHulk && hasPassengers()) {
+        if (isHero(ability.hero) && hasPassengers()) {
             world.playSoundAtBlockCenter(
                 blockPos,
                 SoundRegistry.getRandomGrowlSound(),

@@ -1,7 +1,9 @@
 package gg.norisk.hulk.utils
 
-import gg.norisk.hulk.player.isHulk
+import gg.norisk.heroes.common.hero.isHero
+import gg.norisk.hulk.Hulk
 import gg.norisk.hulk.registry.SoundRegistry
+import net.minecraft.block.Blocks
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.sound.SoundCategory
@@ -9,7 +11,6 @@ import net.minecraft.util.math.BlockPos
 import net.silkmc.silk.core.entity.directionVector
 import net.silkmc.silk.core.entity.modifyVelocity
 import net.silkmc.silk.core.task.mcCoroutineTask
-
 
 object HulkUtils {
     fun generateSphere(centerBlock: BlockPos, radius: Int, hollow: Boolean): List<BlockPos> {
@@ -31,7 +32,7 @@ object HulkUtils {
     }
 
     fun smashEntity(player: PlayerEntity, entity: Entity) {
-        if (player.isHulk) {
+        if (player.isHero(Hulk)) {
             player.world.playSoundAtBlockCenter(
                 entity.blockPos,
                 SoundRegistry.getRandomGrowlSound(),
@@ -54,7 +55,7 @@ object HulkUtils {
             mcCoroutineTask(howOften = 10, client = false) {
                 for (blockPos in generateSphere(entity.blockPos, 3, false)) {
                     val blockState = player.world.getBlockState(blockPos)
-                    if (blockState.isAir) continue
+                    if (blockState.isAir || blockState.block == Blocks.BEDROCK) continue
                     player.world.breakBlock(blockPos, false, player)
                 }
             }

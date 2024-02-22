@@ -1,6 +1,7 @@
 package gg.norisk.hulk.mixin;
 
-import gg.norisk.hulk.player.HulkPlayerKt;
+import gg.norisk.heroes.common.hero.IHeroManagerKt;
+import gg.norisk.hulk.HulkKt;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.AnimalModel;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
@@ -33,14 +34,14 @@ public abstract class BipedEntityModelMixin<T extends LivingEntity> extends Anim
 
     @Inject(method = "animateModel(Lnet/minecraft/entity/LivingEntity;FFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/AnimalModel;animateModel(Lnet/minecraft/entity/Entity;FFF)V"))
     private void animateModelInjection(T livingEntity, float f, float g, float h, CallbackInfo ci) {
-        if (livingEntity instanceof PlayerEntity player && !livingEntity.getPassengerList().isEmpty() && HulkPlayerKt.isHulk(player)) {
+        if (livingEntity instanceof PlayerEntity player && !livingEntity.getPassengerList().isEmpty() && IHeroManagerKt.isHero(player, HulkKt.getHulk())) {
             this.leftArmPose = this.rightArmPose = BipedEntityModel.ArmPose.BOW_AND_ARROW;
         }
     }
 
     @Inject(method = "positionLeftArm", at = @At("HEAD"))
     private void positionLeftArmInjection(T livingEntity, CallbackInfo ci) {
-        if (livingEntity instanceof PlayerEntity player && !livingEntity.getPassengerList().isEmpty() && HulkPlayerKt.isHulk(player)) {
+        if (livingEntity instanceof PlayerEntity player && !livingEntity.getPassengerList().isEmpty() && IHeroManagerKt.isHero(player, HulkKt.getHulk())) {
             this.leftArm.pitch = this.leftArm.pitch * 0.5F - 1.2566371F;
             this.leftArm.yaw = 0.5235988F;
         }
@@ -48,7 +49,7 @@ public abstract class BipedEntityModelMixin<T extends LivingEntity> extends Anim
 
     @Inject(method = "positionRightArm", at = @At("HEAD"))
     private void positionRightArmInjection(T livingEntity, CallbackInfo ci) {
-        if (livingEntity instanceof PlayerEntity player && !livingEntity.getPassengerList().isEmpty() && HulkPlayerKt.isHulk(player)) {
+        if (livingEntity instanceof PlayerEntity player && !livingEntity.getPassengerList().isEmpty() && IHeroManagerKt.isHero(player, HulkKt.getHulk())) {
             this.rightArm.pitch = this.rightArm.pitch * 0.5F - 1.2566371F;
             this.rightArm.yaw = -0.5235988F;
         }
@@ -57,7 +58,7 @@ public abstract class BipedEntityModelMixin<T extends LivingEntity> extends Anim
     @Inject(method = "setAngles(Lnet/minecraft/entity/LivingEntity;FFFFF)V", at = @At("TAIL"))
     private void setAnglesInjection(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
         ModelPart var10000;
-        if (livingEntity instanceof PlayerEntity player && !livingEntity.getPassengerList().isEmpty() && HulkPlayerKt.isHulk(player)) {
+        if (livingEntity instanceof PlayerEntity player && !livingEntity.getPassengerList().isEmpty() && IHeroManagerKt.isHero(player, HulkKt.getHulk())) {
             --this.leftArm.pitch;
             --this.rightArm.pitch;
             var10000 = this.leftArm;

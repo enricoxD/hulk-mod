@@ -1,6 +1,7 @@
 package gg.norisk.hulk.mixin;
 
-import gg.norisk.hulk.player.HulkPlayerKt;
+import gg.norisk.heroes.common.hero.IHeroManagerKt;
+import gg.norisk.hulk.HulkKt;
 import gg.norisk.hulk.player.IHulkPlayer;
 import gg.norisk.hulk.registry.SoundRegistry;
 import gg.norisk.hulk.utils.HulkUtils;
@@ -29,33 +30,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IHulkPla
         super(entityType, world);
     }
 
-    @Inject(method = "initDataTracker", at = @At("TAIL"))
-    private void initDataTrackerInjecetion(CallbackInfo ci) {
-        this.dataTracker.startTracking(HulkPlayerKt.getHulkTracker(), false);
-    }
-
-    @Inject(method = "attack", at = @At("HEAD"))
-    private void attackInjection(Entity entity, CallbackInfo ci) {
-        HulkUtils.INSTANCE.smashEntity((PlayerEntity) ((Object) this), entity);
-    }
-
-    @Inject(method = "getActiveEyeHeight", at = @At("HEAD"), cancellable = true)
-    private void getActiveEyeHeightInjection(EntityPose pose, EntityDimensions dimensions, CallbackInfoReturnable<Float> cir) {
-        if (HulkPlayerKt.isHulk((PlayerEntity) (Object) this)) {
-            cir.setReturnValue(getDimensions(pose).height);
-        }
-    }
-
-    @Inject(method = "getDimensions", at = @At("HEAD"), cancellable = true)
-    private void getDimensionsInjection(EntityPose pose, CallbackInfoReturnable<EntityDimensions> cir) {
-        if (HulkPlayerKt.isHulk((PlayerEntity) (Object) this)) {
-            cir.setReturnValue(EntityDimensions.fixed(1.2f, 2.5f));
-        }
-    }
-
     @Override
     public float getJumpBoostVelocityModifier() {
-        if (HulkPlayerKt.isHulk((PlayerEntity) (Object) this)) {
+        if (IHeroManagerKt.isHero((PlayerEntity) (Object) this, HulkKt.getHulk())) {
             return 0.5f;
         } else {
             return super.getJumpBoostVelocityModifier();
@@ -64,7 +41,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IHulkPla
 
     @Inject(method = "tickMovement", at = @At("HEAD"))
     private void regenerationInjection(CallbackInfo ci) {
-        if (HulkPlayerKt.isHulk((PlayerEntity) (Object) this)) {
+        if (IHeroManagerKt.isHero((PlayerEntity) (Object) this, HulkKt.getHulk())) {
             if (this.getHealth() < this.getMaxHealth() && this.age % 3 == 0) {
                 this.heal(1.0F);
             }
@@ -77,14 +54,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IHulkPla
 
     @Inject(method = "getHurtSound", at = @At("RETURN"), cancellable = true)
     private void getHurtSoundInjection(DamageSource damageSource, CallbackInfoReturnable<SoundEvent> cir) {
-        if (HulkPlayerKt.isHulk((PlayerEntity) (Object) this)) {
+        if (IHeroManagerKt.isHero((PlayerEntity) (Object) this, HulkKt.getHulk())) {
             cir.setReturnValue(SoundRegistry.INSTANCE.getRandomGrowlSound());
         }
     }
 
     @Inject(method = "getFallSounds", at = @At("RETURN"), cancellable = true)
     private void getFallSoundsInjection(CallbackInfoReturnable<FallSounds> cir) {
-        if (HulkPlayerKt.isHulk((PlayerEntity) (Object) this)) {
+        if (IHeroManagerKt.isHero((PlayerEntity) (Object) this, HulkKt.getHulk())) {
             cir.setReturnValue(new FallSounds(SoundRegistry.INSTANCE.getRandomGrowlSound(), SoundRegistry.INSTANCE.getRandomGrowlSound()));
         }
     }
@@ -126,7 +103,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IHulkPla
 
     @Override
     public double getMountedHeightOffset() {
-        if (HulkPlayerKt.isHulk((PlayerEntity) (Object) this)) {
+        if (IHeroManagerKt.isHero((PlayerEntity) (Object) this, HulkKt.getHulk())) {
             return (double) this.getDimensions(this.getPose()).height;
         } else {
             return super.getMountedHeightOffset();

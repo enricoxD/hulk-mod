@@ -1,7 +1,8 @@
 package gg.norisk.hulk.mixin;
 
+import gg.norisk.heroes.common.hero.IHeroManagerKt;
+import gg.norisk.hulk.HulkKt;
 import gg.norisk.hulk.HulkManagerKt;
-import gg.norisk.hulk.player.HulkPlayerKt;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -24,7 +25,7 @@ public abstract class InGameHudMixin {
         var player = MinecraftClient.getInstance().player;
         if (heartType == InGameHud.HeartType.CONTAINER) return;
         if (player == null) return;
-        if (HulkPlayerKt.isHulk(player)) {
+        if (IHeroManagerKt.isHero(player, HulkKt.getHulk())) {
             if (bl) {
                 ci.cancel();
                 return;

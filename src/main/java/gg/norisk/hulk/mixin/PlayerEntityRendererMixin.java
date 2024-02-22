@@ -1,6 +1,7 @@
 package gg.norisk.hulk.mixin;
 
-import gg.norisk.hulk.player.HulkPlayerKt;
+import gg.norisk.heroes.common.hero.IHeroManagerKt;
+import gg.norisk.hulk.HulkKt;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
@@ -11,6 +12,7 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,7 +30,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 
     @Inject(method = "renderArm", at = @At("HEAD"), cancellable = true)
     private void renderArmInjection(MatrixStack matrixStack, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, ModelPart modelPart, ModelPart modelPart2, CallbackInfo ci) {
-        if (!player.getPassengerList().isEmpty() && HulkPlayerKt.isHulk(player)) {
+        if (!player.getPassengerList().isEmpty() && IHeroManagerKt.isHero(player, HulkKt.getHulk())) {
             ci.cancel();
             PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel = this.getModel();
             this.setModelPose(player);

@@ -1,6 +1,7 @@
 package gg.norisk.hulk.mixin;
 
-import gg.norisk.hulk.player.HulkPlayerKt;
+import gg.norisk.heroes.common.hero.IHeroManagerKt;
+import gg.norisk.hulk.HulkKt;
 import net.minecraft.entity.Attackable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -22,7 +23,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable {
 
     @ModifyConstant(method = "computeFallDamage", constant = @Constant(floatValue = 3.0F))
     private float computeFallDamageInjection(float constant) {
-        if ((LivingEntity) ((Object) this) instanceof PlayerEntity player && HulkPlayerKt.isHulk(player)) {
+        if ((LivingEntity) ((Object) this) instanceof PlayerEntity player && IHeroManagerKt.isHero(player, HulkKt.getHulk())) {
             return 9.0f;
         } else {
             return constant;
@@ -31,7 +32,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable {
 
     @ModifyArgs(method = "handleFallDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
     private void handleFallDamageInjection(Args args) {
-        if ((LivingEntity) ((Object) this) instanceof PlayerEntity player && HulkPlayerKt.isHulk(player)) {
+        if ((LivingEntity) ((Object) this) instanceof PlayerEntity player && IHeroManagerKt.isHero(player, HulkKt.getHulk())) {
             args.set(1, (float) args.get(1) / 3f);
         }
     }

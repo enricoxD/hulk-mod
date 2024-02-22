@@ -1,6 +1,7 @@
 package gg.norisk.hulk.mixin;
 
-import gg.norisk.hulk.player.HulkPlayerKt;
+import gg.norisk.heroes.common.hero.IHeroManagerKt;
+import gg.norisk.hulk.HulkKt;
 import gg.norisk.hulk.player.IHulkPlayer;
 import gg.norisk.hulk.events.AttackBlockEvent;
 import me.obsilabor.alert.EventManager;
@@ -36,7 +37,7 @@ public abstract class ClientPlayerInteractionManagerMixin {
     //Für Blöcke -> Blöcke anvisieren hat höhere / andere Range
     @Inject(at = {@At("HEAD")}, method = {"getReachDistance()F"}, cancellable = true)
     private void onGetReachDistance(CallbackInfoReturnable<Float> cir) {
-        if (this.client.player instanceof IHulkPlayer hulkPlayer && HulkPlayerKt.isHulk(client.player)) {
+        if (this.client.player instanceof IHulkPlayer hulkPlayer && IHeroManagerKt.isHero(client.player, HulkKt.getHulk())) {
             cir.setReturnValue(this.gameMode.isCreative() ? hulkPlayer.getGetCustomCreativeBlockReachDistance() : hulkPlayer.getGetCustomBlockReachDistance());
         }
     }

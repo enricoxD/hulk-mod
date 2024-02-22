@@ -1,6 +1,7 @@
 package gg.norisk.hulk.mixin;
 
-import gg.norisk.hulk.player.HulkPlayerKt;
+import gg.norisk.heroes.common.hero.IHeroManagerKt;
+import gg.norisk.hulk.HulkKt;
 import gg.norisk.hulk.player.IHulkPlayer;
 import gg.norisk.hulk.utils.CameraShaker;
 import net.minecraft.client.MinecraftClient;
@@ -50,7 +51,7 @@ public abstract class GameRendererMixin {
             method = "updateTargetedEntity(F)V",
             require = 1, allow = 1, constant = @Constant(doubleValue = 6.0))
     private double getActualReachDistance(final double reachDistance) {
-        if (this.client.player instanceof IHulkPlayer hulkPlayer && HulkPlayerKt.isHulk(client.player)) {
+        if (this.client.player instanceof IHulkPlayer hulkPlayer && IHeroManagerKt.isHero(client.player, HulkKt.getHulk())) {
             return hulkPlayer.getGetCustomCreativeAttackReachDistance();
         }
         return reachDistance;
@@ -58,7 +59,7 @@ public abstract class GameRendererMixin {
 
     @ModifyConstant(method = "updateTargetedEntity(F)V", constant = @Constant(doubleValue = 3.0))
     private double getActualAttackRange0(final double attackRange) {
-        if (this.client.player instanceof IHulkPlayer hulkPlayer && HulkPlayerKt.isHulk(client.player)) {
+        if (this.client.player instanceof IHulkPlayer hulkPlayer && IHeroManagerKt.isHero(client.player, HulkKt.getHulk())) {
             return hulkPlayer.getGetCustomAttackReachDistance();
         }
         return attackRange;
@@ -66,7 +67,7 @@ public abstract class GameRendererMixin {
 
     @ModifyConstant(method = "updateTargetedEntity(F)V", constant = @Constant(doubleValue = 9.0))
     private double getActualAttackRange1(final double attackRange) {
-        if (this.client.player instanceof IHulkPlayer hulkPlayer && HulkPlayerKt.isHulk(client.player)) {
+        if (this.client.player instanceof IHulkPlayer hulkPlayer && IHeroManagerKt.isHero(client.player, HulkKt.getHulk())) {
             double reach;
             if (this.client.player.getAbilities().creativeMode) {
                 reach = hulkPlayer.getGetCustomCreativeAttackReachDistance();
